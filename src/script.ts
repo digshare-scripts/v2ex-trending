@@ -82,6 +82,11 @@ export default script<undefined, Storage>(async (_payload, {storage}) => {
         !!item && !pushedSet.has(item.id),
     );
 
+  if (items.length === 0) {
+    console.error('没有获取到内容');
+    return;
+  }
+
   let history = storage.getItem('history') ?? [];
 
   let idToLatestItemMap = new Map(items.map(item => [item.id, item]));

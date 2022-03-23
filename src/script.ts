@@ -97,7 +97,7 @@ export default script<undefined, Storage>(async (_payload, {storage}) => {
     description: string;
   }[] = [];
 
-  for (let historyItems of history) {
+  for (let historyItems of [...history].reverse()) {
     for (let item of historyItems) {
       let latest = idToLatestItemMap.get(item.id);
 

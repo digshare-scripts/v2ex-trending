@@ -77,10 +77,7 @@ export default script<undefined, Storage>(async (_payload, {storage}) => {
         timestamp: now,
       };
     })
-    .filter(
-      (item): item is NonNullable<typeof item> =>
-        !!item && !pushedSet.has(item.id),
-    );
+    .filter((item): item is NonNullable<typeof item> => !!item);
 
   if (items.length === 0) {
     console.error('没有获取到内容');
@@ -102,6 +99,10 @@ export default script<undefined, Storage>(async (_payload, {storage}) => {
       let latest = idToLatestItemMap.get(item.id);
 
       if (!latest) {
+        continue;
+      }
+
+      if (pushedSet.has(item.id)) {
         continue;
       }
 

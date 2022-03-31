@@ -20,7 +20,7 @@ const THRESHOLDS = [
   {
     spanText: ' 30 分钟',
     span: ms('30min') + THRESHOLD_TOLERANCE,
-    count: 20,
+    count: 30,
   },
 ];
 

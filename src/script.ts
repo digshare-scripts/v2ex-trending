@@ -22,6 +22,11 @@ const THRESHOLDS = [
     span: ms('30min') + THRESHOLD_TOLERANCE,
     count: 30,
   },
+  {
+    spanText: ' 1 小时',
+    span: ms('1h') + THRESHOLD_TOLERANCE,
+    count: 45,
+  },
 ];
 
 const HISTORY_LIMIT = 10;

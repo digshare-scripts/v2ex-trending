@@ -27,9 +27,14 @@ const THRESHOLDS = [
     span: ms('1h') + THRESHOLD_TOLERANCE,
     count: 45,
   },
+  {
+    spanText: ' 2 小时',
+    span: ms('1h') + THRESHOLD_TOLERANCE,
+    count: 60,
+  },
 ];
 
-const HISTORY_LIMIT = 10;
+const HISTORY_LIMIT = 100;
 const PUSHED_LIMIT = 1000;
 
 interface Storage {

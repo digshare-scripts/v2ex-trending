@@ -3,7 +3,7 @@ import {script} from '@digshare/script';
 import * as Cheerio from 'cheerio';
 import ms from 'ms';
 
-const THRESHOLD_TOLERANCE = ms('1min');
+const THRESHOLD_TOLERANCE = ms('5min');
 
 const THRESHOLDS = [
   // {

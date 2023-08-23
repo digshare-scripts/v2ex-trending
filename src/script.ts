@@ -96,7 +96,7 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
 
   const idToLatestItemMap = new Map(items.map(item => [item.id, item]));
 
-  const messages: string[] = [];
+  const hots: Hot[] = [];
 
   for (const historyItems of history) {
     for (const item of historyItems) {
@@ -126,16 +126,18 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
 
       pushedSet.add(item.id);
 
-      messages.push(`\
-[【${latest.node}】${latest.title}](https://v2ex.com${latest.href})
-（💬${thresholdMet.spanText}内新增了 ${change.count} 条评论）`);
+      hots.push({
+        item: latest,
+        threshold: thresholdMet,
+        change: change.count,
+      });
     }
   }
 
   state.history = [...history, items].slice(-HISTORY_LIMIT);
   state.pushed = [...pushedSet].slice(-PUSHED_LIMIT);
 
-  if (messages.length === 0) {
+  if (hots.length === 0) {
     console.info('没有发现新的热帖');
     return {
       state,
@@ -143,16 +145,31 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
   }
 
   return {
-    message: `\
-发现了 ${messages.length} 条正在上窜的帖子：
+    message: {
+      tags: hots.map(({item}) => item.node),
+      content: `\
+发现了 ${hots.length} 条正在上窜的帖子：
 
-${messages.join('\n\n')}
+${hots
+  .map(
+    ({item, threshold, change}) => `\
+- 【${item.node}】[${item.title}](https://v2ex.com${item.href})
+  （💬${threshold.spanText}内新增了 ${change} 条评论）`,
+  )
+  .join('\n\n')}
 `,
+    },
     state,
   };
 });
 
-export interface Item {
+interface Threshold {
+  spanText: string;
+  span: number;
+  count: number;
+}
+
+interface Item {
   id: string;
   title: string;
   href: string;
@@ -160,4 +177,10 @@ export interface Item {
   author: string;
   count: number;
   timestamp: number;
+}
+
+interface Hot {
+  item: Item;
+  threshold: Threshold;
+  change: number;
 }

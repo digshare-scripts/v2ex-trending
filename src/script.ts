@@ -151,11 +151,17 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
 发现了 ${hots.length} 条正在上窜的帖子：
 
 ${hots
-  .map(
-    ({item, threshold, change}) => `\
-- 【${item.node}】[${item.title}](https://v2ex.com${item.href})
-  （💬${threshold.spanText}内新增了 ${change} 条评论）`,
-  )
+  .map(({item, threshold, change}) => {
+    let {node, title, href} = item;
+
+    title = title.replace(/([\[\]])/g, '\\$1');
+
+    const {spanText} = threshold;
+
+    return `\
+- 【${node}】[${title}](https://v2ex.com${href})
+  （💬${spanText}内新增了 ${change} 条评论）`;
+  })
   .join('\n\n')}
 `,
     },

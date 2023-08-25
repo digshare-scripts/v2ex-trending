@@ -3,41 +3,40 @@ import {script} from '@digshare/script';
 import * as Cheerio from 'cheerio';
 import ms from 'ms';
 
-const THRESHOLD_TOLERANCE = ms('5min');
+const THRESHOLD_TOLERANCE = ms('2min');
 
 const THRESHOLDS = [
-  // {
-  //   spanText: ' 5 分钟',
-  //   span: ms('5min') + THRESHOLD_TOLERANCE,
-  //   count: 2,
-  // },
-  // {
-  //   spanText: ' 10 分钟',
-  //   span: ms('10min') + THRESHOLD_TOLERANCE,
-  //   count: 2,
-  // },
+  {
+    spanText: ' 10 分钟',
+    span: ms('10min'),
+    count: 15,
+  },
   {
     spanText: ' 30 分钟',
-    span: ms('30min') + THRESHOLD_TOLERANCE,
+    span: ms('30min'),
     count: 30,
   },
   {
     spanText: ' 1 小时',
-    span: ms('1h') + THRESHOLD_TOLERANCE,
+    span: ms('1h'),
     count: 45,
   },
   {
     spanText: ' 2 小时',
-    span: ms('2h') + THRESHOLD_TOLERANCE,
+    span: ms('2h'),
     count: 60,
   },
 ];
 
-const HISTORY_LIMIT = 5; // 最长 2 小时，30 分钟执行一次，有 4 组记录，再加 1 组一共五组。
+const HISTORY_LIMIT =
+  Math.ceil(THRESHOLDS[THRESHOLDS.length - 1].span / THRESHOLDS[0].span) + 1;
+
+console.log(HISTORY_LIMIT);
+
 const PUSHED_LIMIT = 100;
 
 interface State {
-  history: Item[][];
+  history: HistoryItem[][];
   pushed: string[];
 }
 
@@ -117,7 +116,8 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
 
       const thresholdMet = THRESHOLDS.find(
         threshold =>
-          change.count >= threshold.count && change.span <= threshold.span,
+          change.count >= threshold.count &&
+          change.span <= threshold.span + THRESHOLD_TOLERANCE,
       );
 
       if (!thresholdMet) {
@@ -134,7 +134,12 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
     }
   }
 
-  state.history = [...history, items].slice(-HISTORY_LIMIT);
+  state.history = [
+    ...history,
+    items.map(({id, timestamp, count}) => {
+      return {id, timestamp, count};
+    }),
+  ].slice(-HISTORY_LIMIT);
   state.pushed = [...pushedSet].slice(-PUSHED_LIMIT);
 
   if (hots.length === 0) {
@@ -172,6 +177,12 @@ ${hots
 interface Threshold {
   spanText: string;
   span: number;
+  count: number;
+}
+
+interface HistoryItem {
+  id: string;
+  timestamp: number;
   count: number;
 }
 

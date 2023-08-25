@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "exports": "./src/script.ts",
   "dss": {
-    "schedule": "rate(30m)"
+    "schedule": "cron(*/10 8-23 * * *)"
   },
   "dependencies": {
     "@digshare/script": "0.4",

@@ -31,8 +31,6 @@ const THRESHOLDS = [
 const HISTORY_LIMIT =
   Math.ceil(THRESHOLDS[THRESHOLDS.length - 1].span / THRESHOLDS[0].span) + 1;
 
-console.log(HISTORY_LIMIT);
-
 const PUSHED_LIMIT = 100;
 
 interface State {

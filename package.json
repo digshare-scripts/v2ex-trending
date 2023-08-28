@@ -1,12 +1,13 @@
 {
   "name": "digshare-script",
   "version": "0.0.0",
+  "type": "module",
   "exports": "./src/script.ts",
   "dss": {
     "schedule": "cron(*/10 8-23 * * *)"
   },
   "dependencies": {
-    "@digshare/script": "0.4",
+    "@digshare/script": "~0.4.9",
     "cheerio": "1.0.0-rc.12"
   },
   "devDependencies": {

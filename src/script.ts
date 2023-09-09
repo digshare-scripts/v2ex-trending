@@ -7,22 +7,22 @@ const THRESHOLD_TOLERANCE = ms('2min');
 
 const THRESHOLDS = [
   {
-    spanText: ' 10 分钟',
+    spanText: '10 分钟',
     span: ms('10min'),
     count: 15,
   },
   {
-    spanText: ' 30 分钟',
+    spanText: '30 分钟',
     span: ms('30min'),
     count: 30,
   },
   {
-    spanText: ' 1 小时',
+    spanText: '1 小时',
     span: ms('1h'),
     count: 45,
   },
   {
-    spanText: ' 2 小时',
+    spanText: '2 小时',
     span: ms('2h'),
     count: 60,
   },

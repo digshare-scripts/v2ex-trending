@@ -1,6 +1,7 @@
 {
   "name": "digshare-script",
   "version": "0.0.0",
+  "homepage": "https://github.com/digshare-scripts/v2ex-trending",
   "type": "module",
   "exports": "./src/script.ts",
   "dss": {

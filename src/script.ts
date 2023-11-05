@@ -1,4 +1,4 @@
-import {script} from '@digshare/script';
+import {script, load} from '@digshare/script';
 
 import * as Cheerio from 'cheerio';
 import ms from 'ms';
@@ -43,9 +43,7 @@ export default script<State>(async (state = {history: [], pushed: []}) => {
 
   const pushedSet = new Set(state.pushed);
 
-  const html = await fetch('https://v2ex.com/?tab=all').then(response =>
-    response.text(),
-  );
+  const html = await load('https://v2ex.com/?tab=all', 'text');
 
   const $ = Cheerio.load(html);
 

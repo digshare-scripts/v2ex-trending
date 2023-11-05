@@ -8,7 +8,7 @@
     "schedule": "cron(*/10 8-23 * * *)"
   },
   "dependencies": {
-    "@digshare/script": "~0.4.9",
+    "@digshare/script": "0.4",
     "cheerio": "1.0.0-rc.12"
   },
   "devDependencies": {

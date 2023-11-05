@@ -6,7 +6,7 @@ settings:
 
 dependencies:
   '@digshare/script':
-    specifier: ~0.4.9
+    specifier: '0.4'
     version: 0.4.9(@types/node@18.17.5)(typescript@5.2.2)
   cheerio:
     specifier: 1.0.0-rc.12
